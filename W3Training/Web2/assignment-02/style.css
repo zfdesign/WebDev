@@ -1,0 +1,38 @@
+body {
+	margin:0; 
+	color: #000;
+	font-family: Helvetica, Arial, sans-serif;
+}
+h1 {
+	margin: 0; 
+	padding: .5em;
+	color: #fff;
+	background-color: #000;
+	text-align: center;
+}
+.entries article {
+	margin: .5em;
+	padding: .75em 15px;
+	border: 1px solid #d3d3d3;
+	border-radius: .5em;
+	box-shadow: 1px 2px #d3d3d3;
+}
+.entries article h2 {
+	margin:0;
+	padding: .75em 5px;
+	color: blue;
+	background: transparent;
+	border: none;
+}
+.entries article p {
+	display: none;
+	margin:0;
+	padding: .75em 15px;
+}
+/* show State */
+.entries article.show h2 {
+	border-bottom: 1px solid #ccc
+}
+.entries article.show p {
+	display: block;
+}
