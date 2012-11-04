@@ -1,9 +1,7 @@
-var articlesToggle = document.getElementsByTagName('article');
-
-console.log(articlesToggle.length);
-//*
-for(i=0 ; i<articlesToggle.length ; i++){
-	articlesToggle[i].addEventListener('click', function(e){
+var entries = document.getElementsByClassName('entries'),
+	articles = entries[0].getElementsByTagName('article');
+for(i=0 ; i<articles.length ; i++){
+	articles[i].addEventListener('click', function(e){
 		var element = e.target;
 		if (element.nodeName.toLowerCase() === 'h2') {
 			var pNode = element.parentNode;
@@ -12,4 +10,3 @@ for(i=0 ; i<articlesToggle.length ; i++){
 		}
 	}, false);
 }
-// */
