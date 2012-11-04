@@ -8,26 +8,28 @@ var appNS = (function() {
 				showing = document.getElementsByClassName('show'),
 				showingLength = showing.length, j;
 			for (j = 0; j < showingLength; j++) { 
-				if ( showing[j] !== e.target ) showing[j].className = ""; 
+				if ( showing[j] !== pNode ) {
+					showing[j].className = ""; 
+				}
 			}
 			if ( pNode.className.length > 0 ) { pNode.className = ""; } 
 			else { pNode.className = "show"; }
 		},
-		addEvents = function() {
+		addH2Events = function() {
 			for( var i=0; i < aLength; i++ ) {
 				var h2 = articles[i].getElementsByTagName('h2');
 				h2[0].addEventListener('click', toggleParentClass, false);
 			}
 		},
-		removeEvents = function() {
+		removeH2Events = function() {
 			for( var i=0; i < aLength; i++ ) {
 				var h2 = articles[i].getElementsByTagName('h2');
 				h2[0].removeEventListener('click', toggleParentClass, false);
 			}
 		};
 		return { 
-			addEvents: addEvents,
-			removeEvents: removeEvents
+			addH2Events: addH2Events,
+			removeH2Events: removeH2Events
 		}
 })();
-window.addEventListener('load', addEvents, false);
+window.addEventListener('load', addH2Events, false);
