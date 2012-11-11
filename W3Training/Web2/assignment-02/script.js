@@ -1,6 +1,6 @@
 var appNS = (function() {
 	var entries = document.getElementsByClassName('entries'),
-		articles = entries[0].getElementsByTagName('article')
+		articles = entries[0].getElementsByTagName('article'),
 		aLength = articles.length,
 		activeClass = 'show',
 		addClass = function(clss, el) {
