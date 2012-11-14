@@ -8,6 +8,20 @@
   </head>
   <body>
     <h1>My Diary Entries</h1>
+
+	<form id="addNote" action="_/" method="post" >
+		<div> 
+			<label for="NoteTitle">Note title</label>
+			<input type="text" id="NoteTitle" required maxlength="200" placeholder="Add Note title" />
+		</div>
+		<div>
+			<label for="NoteContent">Note content</label>
+			<textarea id="NoteContent" maxlength="400" placeholder="Type your note here.. Maximum of 400 characters!"></textarea>
+		</div>
+		<input type="reset" value="Reset" />
+		<input type="submit" value="Save" />
+	</form>
+
     <section class='entries'>
       <article>
         <h2>Wrote my first mobile application</h2>

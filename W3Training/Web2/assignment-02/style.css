@@ -31,6 +31,25 @@ h1.showingAll::after  {
 	content: "-";
 }
 
+/* The Form */
+#addNote {
+	margin: 1em;
+}
+#addNote label {
+	display: inline-block;
+	margin: 12px 2.5%;
+	width: 35%;
+	vertical-align: top;
+}
+#addNote input:not([type="reset"]):not([type="submit"]), 
+#addNote textarea {
+	display: inline-block;
+	margin: 12px 2.5%;
+	width: 50%;
+}
+#addNote textarea {
+	min-height: 5em;
+}
 .entries article {
 	margin: .5em;
 	padding: 0;
