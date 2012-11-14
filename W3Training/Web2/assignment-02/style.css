@@ -4,12 +4,33 @@ body {
 	font-family: Helvetica, Arial, sans-serif;
 }
 h1 {
+	position: relative;
 	margin: 0; 
-	padding: .5em;
+	padding: .5em 2.5em .5em .5em;
 	color: #fff;
 	background-color: #000;
 	text-align: center;
 }
+h1::after {
+	position: absolute;
+	top: 20%;
+	right: 5%;
+	min-width: 1em;
+	min-height: 1em;
+	border: 1px solid #000; 
+	border-radius: 4px; 
+	padding: .35em .5em;
+	content: "+";
+	font-size: 16px;
+	font-weight: bold;
+	color: #000;
+	background-color: #fff;
+}
+h1.showingAll::after  {
+	padding: .3em .5em .4em .5em;
+	content: "-";
+}
+
 .entries article {
 	margin: .5em;
 	padding: 0;

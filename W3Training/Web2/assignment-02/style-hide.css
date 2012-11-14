@@ -10,18 +10,32 @@ h1 {
 	color: #fff;
 	background-color: #000;
 	text-align: center;
+	text-shadow: 1px 1px 1px #aaa;
+	border-bottom: 1px solid #aaa;
 }
 h1::after {
 	position: absolute;
-	top: 35%;
+	top: 25%;
 	right: 5%;
-	border: 1px solid white; 
-	padding: .5em 1em;
+	min-width: 1em;
+	min-height: 1em;
+	border: 1px solid #000; 
+	border-radius: 4px; 
+	padding: .35em .5em;
 	content: "+";
-	font-size: 10px;
+	font-size: 16px;
+	font-weight: bold;
+	color: #000;
+	background-color: #fff;
 }
 h1.showingAll::after  {
+	padding: .3em .5em .4em .5em;
 	content: "-";
+	-webkit-transition: all 300ms ease-out;
+		 -o-transition: all 300ms ease-out;
+	   -moz-transition: all 300ms ease-out;
+	    -ms-transition: all 300ms ease-out;
+		    transition: all 300ms ease-out;
 }
 
 .entries article {
@@ -38,6 +52,7 @@ h1.showingAll::after  {
 	padding: 1em 10px;
 }
 .entries article h2 {
+	text-shadow: 1px 1px 1px #aaa;
 	border-bottom: 1px solid #ccc; 
 	color: blue;
 	
