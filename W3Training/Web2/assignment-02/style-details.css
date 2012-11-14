@@ -1,0 +1,62 @@
+body {
+	margin:0; 
+	color: #000;
+	font-family: Helvetica, Arial, sans-serif;
+}
+h1 {
+	margin: 0; 
+	padding: .5em;
+	color: #fff;
+	background-color: #000;
+	text-align: center;
+}
+.entries article {
+	margin: .5em;
+	padding: 0;
+	border: 1px solid #d3d3d3;
+	border-radius: .5em;
+	box-shadow: 1px 2px #d3d3d3;
+}
+.entries article h2, 
+.entries article p {
+	margin:0;
+	padding: 1em 10px;
+	color: blue;
+	border: none;
+}
+.entries article p {
+	opacity: 0; 
+	height: 0;
+	padding: 0;
+	overflow: hidden;
+	color: black;
+   -webkit-transition: height 200ms ease-out;
+		-o-transition: height 200ms ease-out;
+	  -moz-transition: height 200ms ease-out;
+	   -ms-transition: height 200ms ease-out;
+		   transition: height 200ms ease-out;
+
+   -webkit-transition: opacity 400ms ease-out;
+		-o-transition: opacity 400ms ease-out;
+	  -moz-transition: opacity 400ms ease-out;
+	   -ms-transition: opacity 400ms ease-out;
+		   transition: opacity 400ms ease-out;
+	
+	-webkit-backface-visibility: hidden;
+}
+/* show State */
+.entries article.show h2 {
+	border-bottom: 1px solid #ccc; 
+   -webkit-transition: all 200ms ease-out;
+		-o-transition: all 200ms ease-out;
+	  -moz-transition: all 200ms ease-out;
+	   -ms-transition: all 200ms ease-out;
+		   transition: all 200ms ease-out;
+	
+	-webkit-backface-visibility: hidden;
+}
+.entries article.show p {
+	opacity: 1;
+	height: auto;
+	padding: 1em 10px;	
+}
