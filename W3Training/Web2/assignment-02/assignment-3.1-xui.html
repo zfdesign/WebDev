@@ -7,8 +7,37 @@
 	<link rel="stylesheet" href="style-hide.css" />
   </head>
   <body>
-    <h1>My Diary Entries</h1>
-    <section class='entries'>
+
+	  <h1>My notes</h1>
+	  <a href="#Nav" class="menuLink">menu</a>
+
+	<nav id="Nav"> <!-- id="Options" -->
+		<ul>
+			<li class="add"><a href="#AddNoteForm">Add</a>
+				<form method="post" action="#" id="AddNoteForm">
+				<ul>
+					<li>
+						<label for="NoteTitle">Note title</label>
+						<input type="text" id="NoteTitle" maxlength="100" placeholder="Title..." required />
+					</li>
+					<li>
+						<label for="NoteText">Note title</label>
+						<textarea type="text" id="NoteText" maxlength="400" placeholder="Note text..." required></textarea>
+					</li>
+					<li><label><input type="checkbox" /> Add location</label></li>
+					<li><input type="reset" value="Reset" /><input type="submit" value="Add" /></li>
+				</ul>
+				</form>
+			</li>
+			<li class="edit"><a href="#Entries">Edit</a></li>
+			<li class="delete"><a href="#Entries">Delete</a></li>
+			<li class="sycronise"><a href="#Entries">Sycronise</a></li>
+			<li class="settings"><a href="#Entries">Settings</a></li>
+		</ul>
+	</nav>
+
+    <section class='entries' id="Entries">
+	  <!-- <p>There are no notes in your diary.</p> -->
       <article>
         <h2>Wrote my first mobile application</h2>
         <p>
@@ -33,7 +62,8 @@
         </p>
       </article>
     </section>
+	<div class="entriesOverlay"></div>
   </body>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/xuijs/2.3.2/xui.min.js"></script>	
+  <script src="libs/xui.min.2.3.2.js"></script>
   <script src="xui-script.js"></script>
 </html>
