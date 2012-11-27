@@ -1,16 +1,18 @@
 (function() {
-	var Xclass = 'hide', 
+	var hideClass = 'hide', 
 		hideAll = false, 
-		lsNoteCount = Number(localStorage.getItem('noteCount')) || 0;
+		lsNoteCount = Number(localStorage.getItem('noteCount')) || 0,
+		lastItemKey,
+		lastItemValue;
 
 	/* Toggle notes content */ 
 	var toggleH2Content = function(e) {
 			var pNode = e.target.parentNode;
-			x$(pNode).toggleClass(Xclass);
+			x$(pNode).toggleClass(hideClass);
 			x$('body').removeClass('showingAll'); 
 			hideAll = false;
 			x$('.entries article').not(pNode).each(function(){ 
-				x$(this).addClass(Xclass); 
+				x$(this).addClass(hideClass); 
 			}); 
 		},
 		bindH2Click = function(callback) {
@@ -28,7 +30,7 @@
 	x$('h1').on('click', function(e) {
 		e.preventDefault();
 		x$('.entries article').each( function(e, i) { 
-			(hideAll) ? x$(this).addClass(Xclass) : x$(this).removeClass(Xclass); 
+			(hideAll) ? x$(this).addClass(hideClass) : x$(this).removeClass(hideClass); 
 		});
 		x$(this).toggleClass('showingAll'); // TODO: x$('body').toggleClass('showingAll');
 		hideAll = (hideAll) ? false : true;	
@@ -71,14 +73,14 @@
 	function showNotes() {
 		if(lsNoteCount > 0 ) {
 			x$('.notes > p').addClass('hide'); 
-			var lsLength = localStorage.length, i, htmlContent = "";
-			for (i = 0; i < lsLength; i++) {
+			var lsLength = localStorage.length - 1, i, htmlContent = "";
+			for (i = lsLength; i >= 0; i--) {
 				if (localStorage.key(i) !== 'noteCount' ) {
 					htmlContent += getComplexItem(localStorage.key(i));
 				}
 			}
 			x$('.notes').html('inner', htmlContent);
-			x$('.entries article').addClass(Xclass);
+			x$('.entries article').addClass(hideClass);
 			unBindH2Click(); 
 			bindH2Click(toggleH2Content);
 		} else { 
@@ -88,10 +90,10 @@
 	}
 	/* Append Note */
 	function addNoteToList(note) {
-		if(lsNoteCount === 0) { x$('.notes > p').addClass(Xclass); }
+		if(lsNoteCount === 0) { x$('.notes > p').addClass(hideClass); }
 		var noteFChild = x$('.notes')[0].firstChild;
 		x$(noteFChild).html('before', note);
-		// TODO: Xclass; scroll Note to top
+		// TODO: hideClass; scroll Note to top
 		unBindH2Click(); 
 		bindH2Click(toggleH2Content);
 	}
@@ -100,7 +102,8 @@
 	x$('#AddNoteForm').on('submit', function(e) {
 		e.preventDefault(); 
 		x$(this).addClass('interacted');
-		var keyStr = new Date(),
+		var dateStr = new Date(),
+			keyStr = dateStr.getTime(),
 			valStr = "",
 			xTitle = x$('#AddNoteTitle')[0].value,
 			xText  = x$('#AddNoteText')[0].value,
@@ -116,38 +119,39 @@
 			return false;
 		}
 		
-		kStr = keyStr.getTime();
-		valStr += '<article data-key=\"' + kStr + '\">';
+		valStr += '<article data-key=\"' + keyStr + '\">';
 		valStr += '<h2>' + xTitle + '</h2>';
 		valStr += '<p>' + xText + '</p>';
 		if ("geolocation" in navigator && x$('#AddLocation').has(':checked').length > 0 ) {
-			var LongLat = getLongLat();
-			valStr += '<p class="locale">Location: ' + LongLat + '</p>';
+			lastItemKey = keyStr;
+			lastItemValue = valStr;
+			navigator.geolocation.getCurrentPosition(getLatLong, handleGeoError); 
 		} 
+		
 		valStr += '</article>';
 		
-		setComplexItem(kStr, valStr);
+		setComplexItem(keyStr, valStr);
 		addNoteToList(valStr);
 		x$('.entriesOverlay').fire('click');
 		lsNoteCount++;
 		localStorage.setItem('noteCount', lsNoteCount);
 	});
-	
-	
-	function getLongLat() {
-		toReturn = "";
-		navigator.geolocation.getCurrentPosition( function(pos) {
-		   toReturn += 'Lat. ' + pos.coords.latitude;
-		   toReturn += ' Long. ' + pos.coords.longitude;
-		}, 
-		function(err) {
-			toReturn = 'Cannot retrieve your location: ' + err;
-		}, 
-		{ maximumAge:600000, timeout:0 });
-		return toReturn;
+
+
+	function getLatLong(position, key, val) {
+		var LatLong = position.coords.latitude + ',' + position.coords.longitude,
+			googleMapLink = 'http://maps.google.com/maps?q=' + LatLong,
+			pLocale = '<p class="locale">Location: <small><a target="_blank" href="' + googleMapLink + '">' + LatLong + '</a><small></p>';
+
+		x$('.notes article[data-key="' + lastItemKey + '"] p:last-child').html('after', pLocale);
+		var newStr = lastItemValue + pLocale + '</article>';
+		setComplexItem(lastItemKey, newStr);
 	}
-
-
+	function handleGeoError(error) {
+		alert('Cannot retrieve your location: \n' + error);
+	}
+	
+	
 	// INIT()
 	x$(window).load(showNotes); // show saved <article>s
 	x$('nav > ul > li').addClass('hideOptions'); // collapse all sub nav items 
