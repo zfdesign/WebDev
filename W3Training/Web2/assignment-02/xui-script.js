@@ -137,10 +137,10 @@
 		localStorage.setItem('noteCount', lsNoteCount);
 	});
 
-
+	// GEOLOCATION
 	function getLatLong(position, key, val) {
 		var LatLong = position.coords.latitude + ',' + position.coords.longitude,
-			googleMapLink = 'http://maps.google.com/maps?q=' + LatLong,
+			googleMapLink = '//maps.google.com/maps?q=' + LatLong,
 			pLocale = '<p class="locale">Location: <small><a target="_blank" href="' + googleMapLink + '">' + LatLong + '</a><small></p>';
 
 		x$('.notes article[data-key="' + lastItemKey + '"] p:last-child').html('after', pLocale);
@@ -148,7 +148,7 @@
 		setComplexItem(lastItemKey, newStr);
 	}
 	function handleGeoError(error) {
-		alert('Cannot retrieve your location: \n' + error);
+		alert('Your location is currently not available.\n' + error);
 	}
 	
 	
@@ -163,7 +163,7 @@
 	/* BUG FIXING */
 	if (navigator.userAgent.indexOf('Android 2') !== -1) { 
 		x$('html').addClass('androidV2'); 
-		//x$('.notes').setStyle('min-height', window.innerHeight + 'px');
+		x$('.notes').setStyle('min-height', window.innerHeight + 'px');
 	}
 
 	})();

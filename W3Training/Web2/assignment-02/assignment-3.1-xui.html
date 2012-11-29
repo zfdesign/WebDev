@@ -2,7 +2,7 @@
 <html xmlns='http://www.w3.org/1999/xhtml' lang='en'>
   <head>
     <meta charset='utf-8' />
-	<meta name="viewport" content="width=device-width" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Assignment 3 part 1</title>
 	<link rel="stylesheet" href="style-hide.css" />
   </head>
@@ -24,7 +24,7 @@
 						<input type="text" id="AddNoteTitle" name="AddNoteTitle" maxlength="100" placeholder="Title..." required tabindex="1" autofocus="autofocus" />
 					</li>
 					<li>
-						<label for="NoteText">Note title</label>
+						<label for="NoteText">Note content</label>
 						<textarea type="text" id="AddNoteText" name="AddNoteText" maxlength="400" placeholder="Note text..." required tabindex="2"></textarea>
 					</li>
 					<li>
@@ -43,14 +43,14 @@
 			</li>
 			<li class="edit"><a class="disabled" href="#EditNoteForm">Edit</a>
 			
-				<form method="post" action="#" id="EditNoteForm">
+				<form method="post" action="#" id="EditNoteForm" class="hide">
 				  <ul>
 					<li>
 						<label for="NoteTitle">Note title</label>
 						<input type="text" id="EditNoteTitle" name="EditNoteTitle" maxlength="100" placeholder="Title..." required tabindex="1" autofocus="autofocus" />
 					</li>
 					<li>
-						<label for="NoteText">Note title</label>
+						<label for="NoteText">Note content</label>
 						<textarea type="text" id="EditNoteText" name="EditNoteText" maxlength="400" placeholder="Note text..." required tabindex="2"></textarea>
 					</li>
 					<li>
@@ -76,7 +76,8 @@
 
     <section class='entries' id="Entries">
 		<div class="notes">
-		  <p>There are no notes in your diary. <br />Select "&equiv;" followed by Add for a new note.</p>
+		  <p>There are no notes in your diary. <br />
+		  Please, select <em>"&equiv;"</em> button at top left corner of your screen, followed by <em>"Add"</em> for a new note.</p>
 		  <!-- Content populated from localStorage 
 		  <article data-key="1353936982855" class="hide">
 			<h2>Note One</h2>

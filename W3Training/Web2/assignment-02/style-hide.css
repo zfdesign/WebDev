@@ -250,20 +250,16 @@ html.menuOn:not([class~="androidV2"]) .entriesOverlay {
 /* Android Fix  */
 .androidV2 .heading, 
 .androidV2 .entries {
-	-webkit-transform: translateX(0); 
-			transform: translateX(0); 
-	-webkit-transition: transform .4s ease-in-out .1; 
-			transition: transform .4s ease-in-out .1; 
+	top: 0; left: 0;
+	-webkit-transition: left 500ms ease-in-out;
 }
 .menuOn.androidV2 .heading,
 .menuOn.androidV2 .entries, 
 .menuOn.androidV2 .entriesOverlay {
 	position: fixed;
 	overflow: hidden;
-	-webkit-transform: translateX(80%); 
-			transform: translateX(80%); 
-	-webkit-transition: transform .4s ease-in-out .1; 
-			transition: transform .4s ease-in-out .1; 
+	left: 80%;
+	-webkit-transition: left 500ms ease-in-out;
 }
 /* */
 
