@@ -62,13 +62,13 @@
 					</li>
 					<li>
 						<input type="reset" value="Reset" tabindex="4" />
-						<input type="submit" value="Add" tabindex="5" />
+						<input type="submit" value="Submit" tabindex="5" />
 					</li>
 				  </ul>
 				</form>
 			
 			</li>
-			<li class="delete"><a href="#Entries" class="disabled">Delete</a></li>
+			<li class="delete"><a href="#Entries">Delete</a></li>
 			<li class="synchronise"><a href="#Entries" class="disabled">Synchronise</a></li>
 			<li class="settings"><a href="#Entries" class="disabled">Settings</a></li>
 		</ul>
@@ -89,7 +89,19 @@
 		</div>
 	</section>
 	<div class="entriesOverlay"></div>
+	<footer>
+		<a href="#" data-role="btn" 
+			data-edit="" 
+			data-del="Delete all" 
+			data-sync="Syncronise"
+			data-sett="Save"></a>
+		<a href="#" data-role="btn" 
+			data-edit="Cancel" 
+			data-del="Cancel"
+			data-sync=""
+			data-sett="Cancel"></a>
 
+	</footer>
 	<script src="libs/xui.min.2.3.2.js"></script>
 	<script src="xui-script.js"></script>
   </body>

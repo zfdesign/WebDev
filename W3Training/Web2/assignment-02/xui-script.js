@@ -1,5 +1,7 @@
 (function() {
-	var hideClass = 'hide', 
+	var x$html = x$('html'),
+		x$articles = x$('notes'),
+		hideClass = 'hide', 
 		hideAll = false, 
 		lsNoteCount = Number(localStorage.getItem('noteCount')) || 0,
 		lastItemKey,
@@ -9,11 +11,9 @@
 	var toggleH2Content = function(e) {
 			var pNode = e.target.parentNode;
 			x$(pNode).toggleClass(hideClass);
-			x$('body').removeClass('showingAll'); 
+			x$html.removeClass('showingAll'); 
 			hideAll = false;
-			x$('.entries article').not(pNode).each(function(){ 
-				x$(this).addClass(hideClass); 
-			}); 
+			x$('.entries article').not(pNode).addClass(hideClass); 
 		},
 		bindH2Click = function(callback) {
 			x$('article > h2').on('click', function (e) {
@@ -26,13 +26,13 @@
 		};
 
 
-	 // TODO: convert and pass callback
+	// TODO: convert and pass callback
 	x$('h1').on('click', function(e) {
 		e.preventDefault();
 		x$('.entries article').each( function(e, i) { 
 			(hideAll) ? x$(this).addClass(hideClass) : x$(this).removeClass(hideClass); 
 		});
-		x$(this).toggleClass('showingAll'); // TODO: x$('body').toggleClass('showingAll');
+		x$html.toggleClass('showingAll'); 
 		hideAll = (hideAll) ? false : true;	
 	});
 
@@ -40,25 +40,28 @@
 	/* Toggle Menu visibility */
 	x$('a.menuLink').on('click', function(e) {
 		e.preventDefault();
-		x$('html').toggleClass('menuOn');
+		x$html.toggleClass('menuOn').removeClass('deleteModeOn');
 		x$('nav > ul > li').addClass('hideOptions');
 	});
+
 	x$('.entriesOverlay').on('click', function(e) {
 		e.preventDefault();
-		x$('html').removeClass('menuOn');
-		x$('nav > ul > li').addClass('hideOptions');
+		x$html.removeClass('menuOn');
 	});
 
-	/* Toggle expandable menu options */
+	/* Toggle Options */
 	x$('nav > ul > li > a').on('click', function(e) {
 		e.preventDefault();
-		x$('nav > ul > li').not(e.target.parentNode).addClass('hideOptions');
-		var liNode = x$(this)[0].parentNode;
+		var liNode = e.target.parentNode;
+		x$('nav > ul > li').not(liNode).addClass('hideOptions');
 		x$(liNode).toggleClass('hideOptions');
+		// Add Note - reset Form
+		if (x$(liNode).has('.add').length > 0) { 
+			x$('#AddNoteForm')[0].reset(); 
+		}
 	});
 
-
-	/* Helper functions */
+	/* localStorage functions */
 	function getComplexItem(key) {
 		var val = localStorage.getItem(key);
 		if (!val) return val;
@@ -68,6 +71,7 @@
 		if (!val) localStorage.setItem(key, val);
 		else localStorage.setItem(key, JSON.stringify(val));
 	}
+
 
 	/* Show notes */
 	function showNotes() {
@@ -91,8 +95,8 @@
 	/* Append Note */
 	function addNoteToList(note) {
 		if(lsNoteCount === 0) { x$('.notes > p').addClass(hideClass); }
-		var noteFChild = x$('.notes')[0].firstChild;
-		x$(noteFChild).html('before', note);
+		var notesFirstChild = x$('.notes')[0].firstChild;
+		x$(notesFirstChild).html('before', note);
 		// TODO: hideClass; scroll Note to top
 		unBindH2Click(); 
 		bindH2Click(toggleH2Content);
@@ -125,7 +129,7 @@
 		if ("geolocation" in navigator && x$('#AddLocation').has(':checked').length > 0 ) {
 			lastItemKey = keyStr;
 			lastItemValue = valStr;
-			navigator.geolocation.getCurrentPosition(getLatLong, handleGeoError); 
+			navigator.geolocation.getCurrentPosition(getLatLong, handleGeoError, {enableHighAccuracy:true, maximumAge:60000, timeout:27000}); 
 		} 
 		
 		valStr += '</article>';
@@ -148,10 +152,70 @@
 		setComplexItem(lastItemKey, newStr);
 	}
 	function handleGeoError(error) {
-		alert('Your location is currently not available.\n' + error);
+		switch(error.code) {
+			case error.PERMISSION_DENIED:
+				alert('User denied permission to Location services.');
+				break;
+			case error.POSITION_UNAVAILABLE:
+				alert('Your location is currently not available.');
+				break;
+			case error.TIMEOUT:
+				alert('Operation time out, trying to determine your Location.');
+				break;
+			default:
+				alert('Your location is currently not available.\n' + error);
+				break;
+		};
 	}
+
+
+	/* Options > Delete */
+	var bindDeleteEvent = function(e) {
+		x$('article > a.delete').on('click', function(e) {
+			e.preventDefault();
+			var pNode = e.target.parentNode, 
+				noteKey = x$(pNode).attr('data-key');
+			x$(pNode).addClass('deleted');
+			localStorage.removeItem(noteKey);
+			lsNoteCount = lsNoteCount - 1;
+			localStorage.setItem('noteCount', lsNoteCount);
+			if(lsNoteCount < 1) x$('.notes').html('inner', '<p><em>All Notes deleted.</em></p>');
+		});
+	}, 
+	unBindDeleteEvent = function(e) {
+		x$('article > a').un('click');
+	},
+	deleteAllNotes = function(e) {
+		e.preventDefault();
+		localStorage.clear();
+		x$('.notes').html('inner', '<p><em>All Notes deleted.</em></p>');
+	};
+
+	x$('nav > ul > li.delete > a').on('click', function(e) {
+		e.preventDefault();
+		x$html.addClass('deleteModeOn');
+		x$('footer > a').each(function(el){
+			x$(el).html('inner', el.dataset.del);
+		});
+		
+		x$('.entriesOverlay').fire('click');
+		if ( x$('article h2:first-child').length > 0 ) { 
+			x$('article > h2').html('before', '<a href="#" class="delete">X</a>'); 
+		}
+		bindDeleteEvent();
+		x$('footer > a:first-child').on('click', function(e){
+			e.preventDefault();
+			prompt('Delete this note?');
+			deleteAllNotes(e);
+		});
+		x$('footer > a:last-child').on('click', function(e){
+			e.preventDefault();
+			x$html.removeClass('deleteModeOn');
+			
+		});
+	});
 	
-	
+
 	// INIT()
 	x$(window).load(showNotes); // show saved <article>s
 	x$('nav > ul > li').addClass('hideOptions'); // collapse all sub nav items 
@@ -159,12 +223,11 @@
 	if ( localStorage.getItem('noteCount') === null) {
 		localStorage.setItem('noteCount', lsNoteCount);
 	}
-
-	/* BUG FIXING */
+	/* BUG FIXING Androind 2.3 */
 	if (navigator.userAgent.indexOf('Android 2') !== -1) { 
-		x$('html').addClass('androidV2'); 
+		x$html.addClass('androidV2'); 
 		x$('.notes').setStyle('min-height', window.innerHeight + 'px');
 	}
 
-	})();
+})();
 

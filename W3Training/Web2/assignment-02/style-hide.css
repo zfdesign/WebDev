@@ -7,7 +7,8 @@ body {
 	color: #fff;
 	background-color: #3D3D3D;
 }
-.hide{ display: none; }
+.hide { display: none; }
+.deleted { display: none; visibility: hidden; }
 
 /* Form fields */
 label,
@@ -16,7 +17,7 @@ textarea {
 	display: block;
 	width: 90%;
 }
-input, textarea {
+input, textarea, [data-role="btn"] {
 	border: 1px solid #3D3D3D;
 	font-size: 16px;
 	line-height: 1.6rem;
@@ -50,7 +51,8 @@ input[type="submit"] {
 	color: #000;
 }
 input[type="reset"]:active, 
-input[type="submit"]:active {
+input[type="submit"]:active,
+[data-role="btn"]:active {
 	top: 2px;
 	left: 3px;
 	box-shadow: 
@@ -61,7 +63,7 @@ input[type="submit"]:active {
 		3px 2px 1px #212121;
 }
 
-
+.androidV2 input, .androidV2 textarea { line-height: 2rem; }
 
 /* Navigation */
 nav {
@@ -261,9 +263,9 @@ html.menuOn:not([class~="androidV2"]) .entriesOverlay {
 	left: 80%;
 	-webkit-transition: left 500ms ease-in-out;
 }
-/* */
 
-.entriesOverlay { width: 0; visibility: hidden; }
+
+.entriesOverlay { width: 0; height: 0; visibility: hidden; }
 .menuOn .entriesOverlay {
 	visibility: visible; 
 	display: block;
@@ -437,11 +439,11 @@ h1::after,
 	opacity: 1;
 	height: auto;
 	padding: 1rem 10px; 
-	-webkit-transition: height 300ms ease-out;
-		 -o-transition: height 300ms ease-out;
-	   -moz-transition: height 300ms ease-out;
-	    -ms-transition: height 300ms ease-out;
-		    transition: height 300ms ease-out;
+	-webkit-transition: height .3s ease-out;
+		 -o-transition: height .3s ease-out;
+	   -moz-transition: height .3s ease-out;
+	    -ms-transition: height .3s ease-out;
+		    transition: height .3s ease-out;
 
     -webkit-transition: opacity 400ms ease-out;
 		 -o-transition: opacity 400ms ease-out;
@@ -464,6 +466,7 @@ h1::after,
 .entries article.hide h2 {
 	background-color: #fff;
 	border: none;
+	text-overflow: ellipsis;
 }
 .entries article.hide h2:focus {
 	border: none;
@@ -474,11 +477,11 @@ h1::after,
 	padding: 0;
 	overflow: hidden;
 	color: black;
-	-webkit-transition: all 300ms ease-out;
-		 -o-transition: all 300ms ease-out;
-	   -moz-transition: all 300ms ease-out;
-	    -ms-transition: all 300ms ease-out;
-		    transition: all 300ms ease-out;
+	-webkit-transition: all .3s ease-out;
+		 -o-transition: all .3s ease-out;
+	   -moz-transition: all .3s ease-out;
+	    -ms-transition: all .3s ease-out;
+		    transition: all .3s ease-out;
 
 	-webkit-backface-visibility: hidden;
 }
@@ -494,4 +497,106 @@ h1::after,
 .entries article.hide p.locale {
 	border-top: none;
 	padding: 0;
+}
+
+
+/* FOOTER */
+footer {
+	visibility:hidden;
+	position: fixed;
+	left: 0; 
+	bottom: -2.5rem;
+	margin: 0;
+	height: 0;
+	width: 0;
+	padding: 0;
+}
+.deleteModeOn footer, 
+.editModeOn footer, 
+.syncModeOn footer, 
+.settingsModeOn footer {
+	visibility: visible; 
+	position: fixed; 
+	bottom: 0; left: 0;
+	height: 2.5rem; width: 100%;
+	background-color: rgba(0, 0, 0, 0.5); 
+	z-index: 5;
+
+	-webkit-box-shadow: 0 -5px 5px -3px #000;
+	   -moz-box-shadow: 0 -5px 5px -3px #000;
+		 -o-box-shadow: 0 -5px 5px -3px #000;
+			box-shadow: 0 -5px 5px -3px #000;
+
+	-webkit-transition: height .5s ease-out;
+		 -o-transition: height .5s ease-out;
+	   -moz-transition: height .5s ease-out;
+	    -ms-transition: height .5s ease-out;
+		    transition: height .5s ease-out;
+}
+
+.deleteModeOn footer > a, 
+.editModeOn footer > a, 
+.syncModeOn footer > a , 
+.settingsModeOn footer > a { 
+	position: relative;
+	display: inline-block; 
+	margin: .2rem auto;
+	width: auto;
+	border: .1rem solid #000; 
+	height: 2rem;
+	line-height: 2rem;
+	background-color: rgba(255, 122, 0, 0.65); 
+	color: white; 
+	text-align: center;
+	text-decoration: none;
+	vertical-align: middle;
+}
+.deleteModeOn footer > a:first-child, 
+.editModeOn footer > a:first-child, 
+.syncModeOn footer > a:first-child, 
+.settingsModeOn footer > a:first-child { 
+	background-color: rgba(255, 0, 0, 0.65); 
+}
+
+
+.deleteModeOn footer > a, 
+.settingsModeOn footer > a {
+	width: 42%; 
+	margin-left: 4%; 
+	content: attr(data-del); 
+}
+
+.editModeOn footer > a { content: '' }
+.syncModeOn footer > a  { content: '' } 
+.settingsModeOn footer > a { content: '' }
+
+
+/* DELETE Mode On */ 
+.deleteModeOn .entries article h2 {
+	position: relative;
+	padding-left: 3rem;
+}
+.deleteModeOn .entries article.hide h2 {
+	text-overflow: ellipsis;
+}
+
+/*.deleteModeOn .entries article h2:before */
+article a.delete { display: none; }
+.deleteModeOn article a.delete {
+	display: block;
+	position: absolute;
+	top: .75rem;
+	left: .5rem;
+	content: 'X';
+	width: 2rem;
+	height: 2rem; 
+	line-height: 2rem; 
+	color: #000;
+	background: rgba(255, 0, 0, 0.65); 
+	text-decoration: none;
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid #f00;
+	border-radius: 1.5rem;
+	z-index: 2;
 }
