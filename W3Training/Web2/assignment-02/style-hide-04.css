@@ -1,0 +1,602 @@
+html.menuOn {
+	overflow-x: hidden;
+}
+body {
+	margin: 0; 
+	font: 17.5px/1.3em normal Helvetica, Arial, sans-serif;
+	color: #fff;
+	background-color: #3D3D3D;
+}
+.hide { display: none; }
+.deleted { display: none; visibility: hidden; }
+
+/* Form fields */
+label,
+input:not([type="checkbox"]), 
+textarea {
+	display: block;
+	width: 90%;
+}
+input, textarea, [data-role="btn"] {
+	border: 1px solid #3D3D3D;
+	font-size: 16px;
+	line-height: 1.6rem;
+	background: #FFF;
+	box-shadow: 
+		1px 0px 1px #212121,
+		0px 1px 1px #323232,
+		2px 1px 1px #212121,
+		1px 2px 1px #323232,
+		3px 2px 1px #212121,
+		2px 3px 1px #323232,
+		4px 3px 1px #212121,
+		3px 4px 1px #323232,
+		5px 4px 1px #212121,
+		4px 5px 1px #323232,
+		6px 5px 1px #212121;
+}
+.interacted input:invalid, 
+.interacted textarea:invalid {
+	border: 2px solid #ff0000;
+}
+
+input[type="reset"], 
+input[type="submit"] {
+	position: relative;
+	display: table-cell;
+	width: 44%;
+	height: 2.5rem;
+	margin: 1%;
+	font-weight: bold;
+	color: #000;
+}
+input[type="reset"]:active, 
+input[type="submit"]:active,
+[data-role="btn"]:active {
+	top: 2px;
+	left: 3px;
+	box-shadow: 
+		1px 0px 1px #212121,
+		0px 1px 1px #323232,
+		2px 1px 1px #212121,
+		1px 2px 1px #323232,
+		3px 2px 1px #212121;
+}
+
+.androidV2 input, .androidV2 textarea { line-height: 2rem; }
+
+/* Navigation */
+nav {
+	display: none;
+	visibility: hidden; 
+
+	position: absolute;
+	top: 0; left: 0;
+
+	height: 100%;
+	width: 80%;
+	z-index: -1;
+	color: #fff;
+	background: #3D3D3D;
+
+	-webkit-transition: all 1s linear .2s;
+		 -o-transition: all 1s linear .2s;
+	   -moz-transition: all 1s linear .2s;
+	    -ms-transition: all 1s linear .2s;
+		    transition: all 1s linear .2s;
+}
+
+.menuOn nav {
+	display: block;
+	visibility: visible; 
+	z-index: 0;
+	
+	-webkit-transition: all 1s linear 2s;
+		 -o-transition: all 1s linear 2s;
+	   -moz-transition: all 1s linear 2s;
+	    -ms-transition: all 1s linear 2s;
+		    transition: all 1s linear 2s;
+}
+
+.menuOn nav > p:first-child {
+	display: block;
+	position: fixed;
+	top: 0; left: 0;
+	margin:0;
+	width: 100%;
+	height: 50px;
+	min-height: 3rem;
+	line-height: 3rem;
+	font-size: 1.2rem;
+	padding-left: 2rem;
+	vertical-align: middle;
+
+	color: rgba(0, 0, 0, .5);
+	background: #3D3D3D;
+	text-shadow: 	rgba(0,0,0,0.5) -1px 0, 
+					rgba(0,0,0,0.3) 0 -1px, 
+					rgba(255,255,255,0.5) 0 1px, 
+					rgba(0,0,0,0.3) -1px -2px;
+	z-index: 1;
+
+	-webkit-box-shadow: 0 5px 3px -3px #000;
+	   -moz-box-shadow: 0 5px 3px -3px #000;
+			box-shadow: 0 5px 3px -3px #000;
+
+}
+
+nav ul {
+	width: 100%;
+	height: auto;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	line-height: 1.5rem;
+	-webkit-box-shadow: inset 0 0 10px #000;
+	   -moz-box-shadow: inset 0 0 10px #000;
+			box-shadow: inset 0 0 10px #000;
+}
+
+nav > ul {
+	position: relative;
+	margin: 3.2rem 0;
+}
+
+nav > ul > li > a {
+	display: block;
+	margin: 0;
+	border-bottom: 2px solid #aaa;
+	padding: 1rem 0 1rem 2rem;
+	font-weight: bold; 
+	color: #FFF;
+	text-shadow: 2px 1px 1px #204;
+	text-decoration: none;
+}
+
+nav > ul > li > a.disabled {
+	color: #aaa;
+	background-color: rgba(100, 100, 100, 0.5);
+}
+
+nav ul ul li {
+ 	padding: 1rem .5rem 1rem 2.5rem ;
+}
+
+/* Add note */
+nav ul li ul {
+	visibility: visible;
+	height: auto;
+	border-bottom: 2px solid #aaa;
+
+	-webkit-transition: height 500ms ease-out;
+		 -o-transition: height 500ms ease-out;
+	   -moz-transition: height 500ms ease-out;
+	    -ms-transition: height 500ms ease-out;
+		    transition: height 500ms ease-out;
+}
+nav ul li.hideOptions  ul {
+	visibility: hidden;
+	height: 0;
+	border-bottom: none;
+
+	-webkit-transition: height 500ms ease-out;
+		 -o-transition: height 500ms ease-out;
+	   -moz-transition: height 500ms ease-out;
+	    -ms-transition: height 500ms ease-out;
+		    transition: height 500ms ease-out;
+}
+
+
+
+
+/* Notes */
+
+/* *BUGGY* Android 2.3 will not move Articles or Article > h2 to the side
+.entries {
+	position: relative;
+	width: 100%;
+	top: 0;
+	left: 0;
+	-webkit-transition: left 500ms ease-in-out;
+		 -o-transition: left 500ms ease-in-out;
+	   -moz-transition: left 500ms ease-in-out;
+	    -ms-transition: left 500ms ease-in-out;
+		    transition: left 500ms ease-in-out;
+}
+.menuOn .entries, 
+.menuOn .entriesOverlay, 
+.menuOn .heading, 
+.menuOn .heading h1, 
+.menuOn .heading a.menuLink {
+	position: fixed;
+	overflow: hidden;
+	left: 80%;
+	-webkit-transition: left 500ms ease-in-out;
+		 -o-transition: left 500ms ease-in-out;
+	   -moz-transition: left 500ms ease-in-out;
+	    -ms-transition: left 500ms ease-in-out;
+		    transition: left 500ms ease-in-out;
+
+}
+*/
+
+
+html:not([class~="androidV2"]) .heading, 
+html:not([class~="androidV2"]) .entries {
+	-webkit-transform: translateX(0); 
+		 -o-transform: translateX(0);
+	   -moz-transform: translateX(0);
+			transform: translateX(0);
+
+	-webkit-transition: -webkit-transform .4s ease-in-out; 
+		 -o-transition: 	 -o-transform .4s ease-in-out;
+	   -moz-transition:    -moz-transform .4s ease-in-out;
+			transition: 		transform .4s ease-in-out;
+}
+html.menuOn:not([class~="androidV2"]) .heading,
+html.menuOn:not([class~="androidV2"]) .entries, 
+html.menuOn:not([class~="androidV2"]) .entriesOverlay {
+	position: fixed;
+	overflow: hidden;
+	-webkit-transform: translateX(80%);
+		 -o-transform: translateX(80%);
+	   -moz-transform: translateX(80%);
+			transform: translateX(80%);
+
+	-webkit-transition: -webkit-transform .4s ease-in-out; 
+		 -o-transition: 	 -o-transform .4s ease-in-out;
+	   -moz-transition:    -moz-transform .4s ease-in-out;
+			transition: 		transform .4s ease-in-out;
+}
+
+/* Android Fix  */
+.androidV2 .heading, 
+.androidV2 .entries {
+	top: 0; left: 0;
+	-webkit-transition: left 500ms ease-in-out;
+}
+.menuOn.androidV2 .heading,
+.menuOn.androidV2 .entries, 
+.menuOn.androidV2 .entriesOverlay {
+	position: fixed;
+	overflow: hidden;
+	left: 80%;
+	-webkit-transition: left 500ms ease-in-out;
+}
+
+
+.entriesOverlay { width: 0; height: 0; visibility: hidden; }
+.menuOn .entriesOverlay {
+	visibility: visible; 
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: rgba(255,255,255,.2);
+	z-index: 5;
+}
+
+
+.heading {
+	position: fixed;
+	top: 0;
+	left: 0; 
+	margin: 0;
+	width: 100%;
+	height: 50px;
+	min-height: 1.6rem;
+	background-color: #3D3D3D;
+	z-index: 1;
+}
+
+h1 {
+	position: fixed;
+	left: 0;
+	top: 0;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	line-height: 3rem;
+	font-size: 2.2rem;
+
+	background: #3D3D3D;
+	color: #FFF;
+	text-shadow: 2px 1px 1px #204;
+	text-align: center;
+	vertical-align: middle;
+	text-overflow: ellipsis;
+	z-index: 2;
+	-webkit-box-shadow: 0 5px 3px -3px #000;
+	   -moz-box-shadow: 0 5px 3px -3px #000;
+			box-shadow: 0 5px 3px -3px #000;
+
+	-webkit-transition: left 500ms ease-in-out;
+		 -o-transition: left 500ms ease-in-out;
+	   -moz-transition: left 500ms ease-in-out;
+	    -ms-transition: left 500ms ease-in-out;
+		    transition: left 500ms ease-in-out;
+}
+
+a.menuLink {
+	position: fixed;
+	top: 0;
+	left: 0;
+	min-width: 30px;
+	margin: 0;
+	padding: 0 10px;
+	line-height: 3.2rem;
+	font-size: 2.2rem;
+	font-weight: bold;
+	text-decoration: none;
+	text-align: center;
+	vertical-align: middle;
+	z-index: 3;
+
+	color: rgba(0, 0, 0, .5);
+	text-shadow: 	rgba(0,0,0,0.5) -1px 0, 
+					rgba(0,0,0,0.3) 0 -1px, 
+					rgba(255,255,255,0.5) 0 1px, 
+					rgba(0,0,0,0.3) -1px -2px;
+
+	-webkit-transition: left 500ms ease-in-out;
+		 -o-transition: left 500ms ease-in-out;
+	   -moz-transition: left 500ms ease-in-out;
+	    -ms-transition: left 500ms ease-in-out;
+		    transition: left 500ms ease-in-out;
+}
+
+/* Expand/Colapse arrows */ 
+h1::after,  
+.entries article h2::after {
+	content: "";
+	position: absolute;
+	top: 44%;
+	right: 15px;
+	width: 0;
+	height: 0;
+	border-top: 	12px solid #fff;
+	border-left: 	8px solid transparent; 
+	border-right: 	8px solid transparent;
+}
+.showingAll h1::after, 
+.showingAll article h2::after, 
+.entries article.hide h2::after {
+	border-top: none;
+	border-bottom: 12px solid #fff;
+}
+
+.entries article h2::after {
+	border-top: none;
+	border-bottom: 12px solid #3D3D3D;
+}
+.entries article.hide h2::after {
+	border-bottom: none;
+	border-top: 12px solid #3D3D3D;
+}
+
+
+
+/* buggy height */
+.entries { 
+	position: absolute;
+	top: 0;	left: 0;
+	width: 100%;
+	height: 100%; 
+	display: block;
+	background-color: #fff;
+}
+.entries .notes {
+	position: relative;
+	margin: 0;
+/*	min-height: 420px; */
+	height: 100%;
+	padding: 3.6rem 0;
+	background: #fff;
+	color: #000;
+}
+
+.entries .notes > p {
+	margin: 15px;
+	fint-weight: bold;
+}
+
+/* show State */
+.entries article {
+	position: relative;
+	display: block;
+ 	margin: 10px; 
+	padding: 0;
+	border: 1px solid #d3d3d3;
+	box-shadow: 
+		1px 0px 1px #212121,
+		0px 1px 1px #323232,
+		2px 1px 1px #212121,
+		1px 2px 1px #323232,
+		3px 2px 1px #212121,
+		2px 3px 1px #323232,
+		4px 3px 1px #212121,
+		3px 4px 1px #323232,
+		5px 4px 1px #212121,
+		4px 5px 1px #323232,
+		6px 5px 1px #212121;
+}
+.entries article h2, 
+.entries article p {
+	margin: 0;
+	padding: 1rem 10px;
+}
+.entries article h2 {
+	position: relative;
+	padding-right: 3rem;
+	font-size: 19px;
+	text-shadow: 1px 1px 1px #aaa;
+	border-bottom: 1px solid #ccc; 
+	color: #204;
+	background-color: rgba(0, 0, 0, .2);
+	
+	-webkit-backface-visibility: hidden;
+}
+.entries article p {
+	opacity: 1;
+	height: auto;
+	padding: 1rem 10px; 
+	-webkit-transition: height .3s ease-out;
+		 -o-transition: height .3s ease-out;
+	   -moz-transition: height .3s ease-out;
+	    -ms-transition: height .3s ease-out;
+		    transition: height .3s ease-out;
+
+    -webkit-transition: opacity 400ms ease-out;
+		 -o-transition: opacity 400ms ease-out;
+	   -moz-transition: opacity 400ms ease-out;
+	    -ms-transition: opacity 400ms ease-out;
+		    transition: opacity 400ms ease-out;
+
+}
+/* hide state */
+.entries article.hide {
+	top: 2px;
+	left: 3px;
+	box-shadow: 
+		1px 0px 1px #212121,
+		0px 1px 1px #323232,
+		2px 1px 1px #212121,
+		1px 2px 1px #323232,
+		3px 2px 1px #212121;
+}
+.entries article.hide h2 {
+	background-color: #fff;
+	border: none;
+	text-overflow: ellipsis;
+}
+.entries article.hide h2:focus {
+	border: none;
+}
+.entries article.hide p {
+	opacity: 0; 
+	height: 0;
+	padding: 0;
+	overflow: hidden;
+	color: black;
+	-webkit-transition: all .3s ease-out;
+		 -o-transition: all .3s ease-out;
+	   -moz-transition: all .3s ease-out;
+	    -ms-transition: all .3s ease-out;
+		    transition: all .3s ease-out;
+
+	-webkit-backface-visibility: hidden;
+}
+
+.entries article p.locale {
+	border-top: 1px solid #ccc;
+	padding: .5rem 10px;
+	color: #ccc;
+	font-size: .75rem;
+	text-align: right;
+}
+
+.entries article.hide p.locale {
+	border-top: none;
+	padding: 0;
+}
+
+
+/* FOOTER */
+footer {
+	visibility:hidden;
+	position: fixed;
+	left: 0; 
+	bottom: -2.5rem;
+	margin: 0;
+	height: 0;
+	width: 0;
+	padding: 0;
+}
+.deleteModeOn footer, 
+.editModeOn footer, 
+.syncModeOn footer, 
+.settingsModeOn footer {
+	visibility: visible; 
+	position: fixed; 
+	bottom: 0; left: 0;
+	height: 2.5rem; width: 100%;
+	background-color: rgba(0, 0, 0, 0.5); 
+	z-index: 5;
+
+	-webkit-box-shadow: 0 -5px 5px -3px #000;
+	   -moz-box-shadow: 0 -5px 5px -3px #000;
+		 -o-box-shadow: 0 -5px 5px -3px #000;
+			box-shadow: 0 -5px 5px -3px #000;
+
+	-webkit-transition: height .5s ease-out;
+		 -o-transition: height .5s ease-out;
+	   -moz-transition: height .5s ease-out;
+	    -ms-transition: height .5s ease-out;
+		    transition: height .5s ease-out;
+}
+
+.deleteModeOn footer > a, 
+.editModeOn footer > a, 
+.syncModeOn footer > a , 
+.settingsModeOn footer > a { 
+	position: relative;
+	display: inline-block; 
+	margin: .2rem auto;
+	width: auto;
+	border: .1rem solid #000; 
+	height: 2rem;
+	line-height: 2rem;
+	background-color: rgba(255, 122, 0, 0.65); 
+	color: white; 
+	text-align: center;
+	text-decoration: none;
+	vertical-align: middle;
+}
+.deleteModeOn footer > a:first-child, 
+.editModeOn footer > a:first-child, 
+.syncModeOn footer > a:first-child, 
+.settingsModeOn footer > a:first-child { 
+	background-color: rgba(255, 0, 0, 0.65); 
+}
+
+
+.deleteModeOn footer > a, 
+.settingsModeOn footer > a {
+	width: 42%; 
+	margin-left: 4%; 
+	content: attr(data-del); 
+}
+
+.editModeOn footer > a { content: '' }
+.syncModeOn footer > a  { content: '' } 
+.settingsModeOn footer > a { content: '' }
+
+
+/* DELETE Mode On */ 
+.deleteModeOn .entries article h2 {
+	position: relative;
+	padding-left: 3rem;
+}
+.deleteModeOn .entries article.hide h2 {
+	text-overflow: ellipsis;
+}
+
+/*.deleteModeOn .entries article h2:before */
+article a.delete { display: none; }
+.deleteModeOn article a.delete {
+	display: block;
+	position: absolute;
+	top: .75rem;
+	left: .5rem;
+	content: 'X';
+	width: 2rem;
+	height: 2rem; 
+	line-height: 2rem; 
+	color: #000;
+	background: rgba(255, 0, 0, 0.65); 
+	text-decoration: none;
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid #f00;
+	border-radius: 1.5rem;
+	z-index: 2;
+}

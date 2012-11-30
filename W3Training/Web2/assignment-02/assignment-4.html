@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml' lang='en'>
+  <head>
+    <meta charset='utf-8' />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Assignment 3 part 1</title>
+	<link rel="stylesheet" href="style-hide-04.css" />
+  </head>
+  <body>
+
+	  <div class="heading">
+		<h1>My notes</h1>
+		<a href="#Options" class="menuLink">&equiv;</a>
+	  </div>
+
+	<nav id="Options">
+		<p>Options</p>
+		<ul>
+			<li class="add"><a href="#AddNoteForm">Add</a>
+				<form method="post" action="#" id="AddNoteForm">
+				  <ul>
+					<li>
+						<label for="NoteTitle">Note title</label>
+						<input type="text" id="AddNoteTitle" name="AddNoteTitle" maxlength="100" placeholder="Title..." required tabindex="1" autofocus="autofocus" />
+					</li>
+					<li>
+						<label for="NoteText">Note content</label>
+						<textarea type="text" id="AddNoteText" name="AddNoteText" maxlength="400" placeholder="Note text..." required tabindex="2"></textarea>
+					</li>
+					<li>
+						<label>
+							<input type="checkbox" name="AddLocale" id="AddLocation" value="Location" tabindex="3" /> 
+							Add location
+						</label>
+						<input type="hidden" name="AddId" id="AddId" value="" /><!-- Timestamp ID -->
+					</li>
+					<li>
+						<input type="reset" value="Reset" tabindex="4" />
+						<input type="submit" value="Add" tabindex="5" />
+					</li>
+				  </ul>
+				</form>
+			</li>
+			<li class="edit"><a class="disabled" href="#EditNoteForm">Edit</a>
+			
+				<form method="post" action="#" id="EditNoteForm" class="hide">
+				  <ul>
+					<li>
+						<label for="NoteTitle">Note title</label>
+						<input type="text" id="EditNoteTitle" name="EditNoteTitle" maxlength="100" placeholder="Title..." required tabindex="1" autofocus="autofocus" />
+					</li>
+					<li>
+						<label for="NoteText">Note content</label>
+						<textarea type="text" id="EditNoteText" name="EditNoteText" maxlength="400" placeholder="Note text..." required tabindex="2"></textarea>
+					</li>
+					<li>
+						<label>
+							<input type="checkbox" name="EditLocale" id="EditLocation" value="Location" tabindex="3" /> 
+							Add location
+						</label>
+						<input type="hidden" name="EditId" id="EditId" value="" /><!-- Timestamp ID -->
+					</li>
+					<li>
+						<input type="reset" value="Reset" tabindex="4" />
+						<input type="submit" value="Submit" tabindex="5" />
+					</li>
+				  </ul>
+				</form>
+			
+			</li>
+			<li class="delete"><a href="#Entries">Delete</a></li>
+			<li class="synchronise"><a href="#Entries" class="disabled">Synchronise</a></li>
+			<li class="settings"><a href="#Entries" class="disabled">Settings</a></li>
+		</ul>
+	</nav>
+
+    <section class='entries' id="Entries">
+		<div class="notes">
+		  <p>There are no notes in your diary. <br />
+		  Please, select <em>"&equiv;"</em> button at top left corner of your screen, followed by <em>"Add"</em> for a new note.</p>
+		  <!-- Content populated from localStorage 
+		  <article data-key="1353936982855" class="hide">
+			<h2>Note One</h2>
+			<p>Note one text. Testing notes content...</p>
+			<p class="locale">Location: <a target="_blank" href="//maps.googleapis.com/maps/api/staticmap?center=52.8382,-2.327815&zoom=14&size=400x400&sensor=false">Location: Long. 52.8382, Lat. -2.327815</a></p>
+		  </article>
+		  --> 
+
+		</div>
+	</section>
+	<div class="entriesOverlay"></div>
+	<footer>
+		<a href="#" data-role="btn" 
+			data-edit="" 
+			data-del="Delete all" 
+			data-sync="Syncronise"
+			data-sett="Save"></a>
+		<a href="#" data-role="btn" 
+			data-edit="Cancel" 
+			data-del="Cancel"
+			data-sync=""
+			data-sett="Cancel"></a>
+
+	</footer>
+	<script src="libs/xui.min.2.3.2.js"></script>
+	<script src="xui-script-04.js"></script>
+  </body>
+</html>
